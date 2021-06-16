@@ -1,0 +1,31 @@
+MODEL:
+  NUM_CLASSES: 17
+  BACKBONE:
+    NAME: "R50_512"
+    OUT_CHANNELS: (512, 1024, 2048, 1024, 512, 256, 512)
+  RESNET:
+    SE: False
+    CBAM: False
+    FUSION: True
+    BLOCKS: [3, 4, 6, 3]
+    EXTRAS: [128, 256, 512, 256, 128, 64, 128]
+  PRIORS:
+    FEATURE_MAPS: [64, 32, 16, 8, 4, 2, 1]
+    STRIDES: [8, 16, 32, 64, 128, 256, 512]
+    MIN_SIZES: [20.48, 51.2, 133.12, 215.04, 296.96, 378.88, 460.8]
+    MAX_SIZES: [51.2, 133.12, 215.04, 296.96, 378.88, 460.8, 542.72]
+    ASPECT_RATIOS: [[2], [2, 3], [2, 3], [2, 3], [2, 3], [2], [2]]
+    BOXES_PER_LOCATION: [4, 6, 6, 6, 6, 4, 4]
+INPUT:
+  IMAGE_SIZE: 512
+DATASETS:
+  TRAIN: ("fruit_trainval", "fruit_trainval")
+  TEST: ("fruit_test", )
+SOLVER:
+  MAX_ITER: 24000
+  LR_STEPS: [16000, 20000]
+  GAMMA: 0.1
+  BATCH_SIZE: 2
+  LR: 1e-3
+
+OUTPUT_DIR: 'outputs/resnet50_ssd512_fruit_feature_fusion'
